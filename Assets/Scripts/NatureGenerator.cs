@@ -26,9 +26,7 @@ public class NatureGenerator : MonoBehaviour
                 for (int k = 0; k < chunkSize.y; k++)
                 {
                     float spawnBlockChance = 0f;
-                    float noise = Noise.Get2DPerlin(new Vector2(i, j), (int) chunkSize.x, 500, 0.25f);
-                    int terrainHeight = Mathf.FloorToInt(chunkSize.x * noise);
-                    
+
                     if (k == 0)
                     {
                         map.AddBlockInMap(_blocks,gameObject, 3, i, k, j);
@@ -52,10 +50,11 @@ public class NatureGenerator : MonoBehaviour
                     }
                     else
                     {
-                       
-                        if (k == terrainHeight)
+                        spawnBlockChance = Random.Range(0.0f, 1.0f);
+                        if (spawnBlockChance > chanceOfEmptyBlock)
                         {
                             var randomBlock = Random.Range(0, 2);
+                           
                             map.AddBlockInMap(_blocks, gameObject, randomBlock, i, k, j);
                         }
                         else
@@ -68,23 +67,6 @@ public class NatureGenerator : MonoBehaviour
                             else
                                 map.AddEmptyBlockInMap(i, k, j);
                         }
-                        // spawnBlockChance = Random.Range(0.0f, 1.0f);
-                        // if (spawnBlockChance > chanceOfEmptyBlock)
-                        // {
-                        //     var randomBlock = Random.Range(0, 2);
-                        //    
-                        //     map.AddBlockInMap(_blocks, gameObject, randomBlock, i, k, j);
-                        // }
-                        // else
-                        // {
-                        //     spawnBlockChance = Random.Range(0.0f, 1.0f);
-                        //     if (spawnBlockChance < chanceOfNatureBlock)
-                        //     {
-                        //         map.AddBlockInMap( _blocks,gameObject, 5, i, k, j);
-                        //     }
-                        //     else
-                        //         map.AddEmptyBlockInMap(i, k, j);
-                        // }
                     }
                 }
             }
