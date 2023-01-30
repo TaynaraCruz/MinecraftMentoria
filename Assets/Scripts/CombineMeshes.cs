@@ -91,8 +91,11 @@ public class CombineMeshes : MonoBehaviour
         Destroy(meshRenderer);
         Destroy(meshFilter);
        
-        for(int i = 0; i < transform.childCount; ++i) {
-            transform.GetChild(i).gameObject.SetActive(true);
+        for(int i = 0; i < transform.childCount; ++i)
+        {
+            var child = transform.GetChild(i).gameObject;
+            child.SetActive(true);
+            ActivateAllChildrenRecursive(child);
         }
         
         // foreach (Transform child in transform.GetComponentsInChildren<Transform>())
@@ -111,6 +114,19 @@ public class CombineMeshes : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    private void ActivateAllChildrenRecursive(GameObject obj)
+    {
+        if (obj == null || obj.transform.childCount == 0)
+            return;
+        for (int i = 0; i < obj.transform.childCount; ++i)
+        {
+            var child = obj.transform.GetChild(i).gameObject;
+            child.SetActive(true);
+            ActivateAllChildrenRecursive(child);
+        }
+       
     }
 
 }
