@@ -1819,6 +1819,14 @@ PrefabInstance:
       propertyPath: blocksManager
       value: 
       objectReference: {fileID: 1591756411}
+    - target: {fileID: 484143592150662944, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chanceOfNatureBlock
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662944, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chanceOfSpecificBlock
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
       propertyPath: chunkSize.x
       value: 5

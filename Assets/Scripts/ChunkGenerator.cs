@@ -44,5 +44,7 @@ public class ChunkGenerator : MonoBehaviour
         if (combineMeshes)
             combineMeshes.Combine();
         yield return new WaitForEndOfFrame();
+        Time.timeScale = 1;
+        loadingScreen.SetActive(false);
     }
 }

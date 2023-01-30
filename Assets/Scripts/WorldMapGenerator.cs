@@ -66,8 +66,6 @@ public class WorldMapGenerator : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         SaveManager.Save(_map);
-        Time.timeScale = 1;
-        loadingScreen.SetActive(false);
     }
     
 }

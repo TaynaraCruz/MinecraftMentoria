@@ -27,9 +27,17 @@ public class NatureGenerator : MonoBehaviour
                 {
                     float spawnBlockChance = 0f;
 
-                    if (k == 0)
+                    if (k >= 0 && k <= 2)
                     {
-                        map.AddBlockInMap(_blocks,gameObject, 3, i, k, j);
+                        spawnBlockChance = Random.Range(0.0f, 1.0f);
+                        if (spawnBlockChance < chanceOfSpecificBlock)
+                        {
+                            map.AddBlockInMap(_blocks,gameObject, 2, i, k, j);
+                        }
+                        else
+                        {
+                            map.AddBlockInMap(_blocks,gameObject, 3, i, k, j);
+                        }
                         
                     }
                     else if (k == 3)
