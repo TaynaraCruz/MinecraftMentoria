@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   natureGenerator: {fileID: 484143592150662944}
-  chunkSize: {x: 5, y: 6, z: 5}
+  chunkSize: {x: 5, y: 10, z: 5}
   loadingScreen: {fileID: 0}
   combineMeshes: {fileID: 484143592150663135}
 --- !u!114 &484143592150663135
@@ -77,8 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blocksManager: {fileID: 0}
   chanceOfEmptyBlock: 0.1
-  chanceOfSpecificBlock: 0.3
-  chanceOfNatureBlock: 0.2
+  chanceOfSpecificBlock: 0.2
+  chanceOfNatureBlock: 0.02
 --- !u!65 &484143592150662945
 BoxCollider:
   m_ObjectHideFlags: 0

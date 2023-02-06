@@ -1819,26 +1819,6 @@ PrefabInstance:
       propertyPath: blocksManager
       value: 
       objectReference: {fileID: 1591756411}
-    - target: {fileID: 484143592150662944, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
-      propertyPath: chanceOfNatureBlock
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 484143592150662944, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
-      propertyPath: chanceOfSpecificBlock
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
-      propertyPath: chunkSize.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
-      propertyPath: chunkSize.y
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
-      propertyPath: chunkSize.z
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
       propertyPath: loadingScreen
       value: 
@@ -2013,7 +1993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1926785511}
-  mapSize: {x: 30, y: 6, z: 30}
+  mapSize: {x: 30, y: 10, z: 30}
   mapMaxSize: 30
   chunkSize: 5
   blocksManager: {fileID: 1591756411}
@@ -2649,7 +2629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3291080850026731780, guid: 25df634e8e13d4357a25572cb6e84b1a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3291080850026731784, guid: 25df634e8e13d4357a25572cb6e84b1a, type: 3}
       propertyPath: m_Pivot.x

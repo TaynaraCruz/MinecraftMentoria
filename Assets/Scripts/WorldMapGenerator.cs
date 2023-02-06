@@ -58,13 +58,14 @@ public class WorldMapGenerator : MonoBehaviour
         {
             for (int j = 0; j < mapSize.z; j += chunkSize)
             {
-                //TODO revisar isso aqui. Como colocar um filho?
                 var chunkObj = Instantiate(chunkPrefab, new Vector3(i, 0, j), Quaternion.identity, gameObject.transform);
                 var generationObj = chunkObj.GetComponent<ChunkGenerator>();
                 generationObj.CreateChunk(_map);
             }
             yield return new WaitForEndOfFrame();
         }
+        Time.timeScale = 1;
+        loadingScreen.SetActive(false);
         SaveManager.Save(_map);
     }
     
