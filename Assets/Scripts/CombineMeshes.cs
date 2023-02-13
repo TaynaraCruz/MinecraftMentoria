@@ -20,7 +20,11 @@ public class CombineMeshes : MonoBehaviour
         foreach (MeshFilter meshFilter in meshFilters)
         {
             MeshRenderer meshRenderer = meshFilter.GetComponent<MeshRenderer>();
-
+            if (meshFilter.gameObject.layer == 6)
+            {
+                meshRenderer.transform.gameObject.SetActive(false);
+                continue;
+            }
             if (!meshRenderer ||
                 !meshFilter.sharedMesh ||
                 meshRenderer.sharedMaterials.Length != meshFilter.sharedMesh.subMeshCount)
@@ -97,11 +101,6 @@ public class CombineMeshes : MonoBehaviour
             child.SetActive(true);
             ActivateAllChildrenRecursive(child);
         }
-        
-        // foreach (Transform child in transform.GetComponentsInChildren<Transform>())
-        // {
-        //     child.gameObject.SetActive(true);
-        // }
     }
 
     private int Contains(ArrayList searchList, string searchName)
@@ -126,7 +125,6 @@ public class CombineMeshes : MonoBehaviour
             child.SetActive(true);
             ActivateAllChildrenRecursive(child);
         }
-       
     }
 
 }

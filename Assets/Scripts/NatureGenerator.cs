@@ -32,28 +32,28 @@ public class NatureGenerator : MonoBehaviour
                 for (int z = 0; z < chunkSize.z; z++)
                 {
                     var terrainHeight = Mathf.FloorToInt(chunkSize.y * Noise.Get2DPerlin(new Vector2(x, z), (int) chunkSize.x, 800, 0.25f));
+                    var layer = shouldRenderInsideChunk(chunkSize, terrainHeight, x, y, z) ? 0 : 6;
                     if (y == 0)
                     {
-                        map.AddBlockInMap(_blocks, gameObject, 3, x, y, z);
+                        map.AddBlockInMap(_blocks, gameObject, 3, x, y, z, layer);
                     }
-                    else if (y <= terrainHeight)
+                    else if (y < terrainHeight)
                     {
-                        map.AddBlockInMap(_blocks, gameObject, 0, x, y, z);
+                        map.AddBlockInMap(_blocks, gameObject, 0, x, y, z, layer);
                     }
-                    else
-                    {
-                        map.AddEmptyBlockInMap(x, y, z);
-                    }
-
-                    if (y > terrainHeight)
+                    else if (y == terrainHeight)
                     {
                         var spawnBlockChance = Random.Range(0.0f, 1.0f);
                         if (spawnBlockChance < chanceOfNatureBlock)
                         {
-                            map.AddBlockInMap(_blocks, gameObject, 5, x, y, z);
+                            map.AddBlockInMap(_blocks, gameObject, 5, x, y, z, layer);
                         }
                         else
                             map.AddEmptyBlockInMap(x, y, z);
+                    }
+                    else
+                    {
+                        map.AddEmptyBlockInMap(x, y, z);
                     }
                 }
             }
@@ -121,5 +121,11 @@ public class NatureGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool shouldRenderInsideChunk(Vector3 chunkSize, int terrainHeight, int posX, int posY, int posZ)
+    {
+        return posX == (int) chunkSize.x - 1 || posY == (int) chunkSize.y - 1 || posZ == (int) chunkSize.z - 1
+                || posX == 0 || posY == 0 || posZ == 0 || posY >= terrainHeight-1;
     }
 }

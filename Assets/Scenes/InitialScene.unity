@@ -776,7 +776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4987290384403388866, guid: 62c0c96d8c265442e93f93827970185c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.5
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4987290384403388866, guid: 62c0c96d8c265442e93f93827970185c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1819,6 +1819,34 @@ PrefabInstance:
       propertyPath: blocksManager
       value: 
       objectReference: {fileID: 1591756411}
+    - target: {fileID: 484143592150662944, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chanceOfNatureBlock
+      value: 0.009
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662945, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: m_Size.x
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662945, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: m_Size.y
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662945, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: m_Size.z
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chunkSize.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chunkSize.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
+      propertyPath: chunkSize.z
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 484143592150662946, guid: a9b591e01dc1645b9b75a6337a613373, type: 3}
       propertyPath: loadingScreen
       value: 
@@ -1993,9 +2021,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1926785511}
-  mapSize: {x: 30, y: 10, z: 30}
-  mapMaxSize: 30
-  chunkSize: 5
+  mapSize: {x: 100, y: 20, z: 100}
+  mapMaxSize: 100
+  chunkSize: 20
   blocksManager: {fileID: 1591756411}
   chunkPrefab: {fileID: 1538547105}
 --- !u!224 &1697973057 stripped

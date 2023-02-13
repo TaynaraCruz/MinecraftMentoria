@@ -43,7 +43,7 @@ public class ChunkGenerator : MonoBehaviour
         natureGenerator.NatureGeneration(chunkSize, map);
         if (combineMeshes)
             combineMeshes.Combine();
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); 
         Time.timeScale = 1;
         loadingScreen.SetActive(false);
     }
