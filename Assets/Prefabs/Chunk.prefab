@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 484143592150662947}
   - component: {fileID: 484143592150662946}
   - component: {fileID: 484143592150663135}
-  - component: {fileID: 484143592150662944}
   - component: {fileID: 484143592150662945}
   m_Layer: 0
   m_Name: Chunk
@@ -47,9 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54133f860d324fb18477ce6811bb328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  natureGenerator: {fileID: 484143592150662944}
-  chunkSize: {x: 5, y: 10, z: 5}
-  loadingScreen: {fileID: 0}
+  loadingScreen: {fileID: 3291080850026731780, guid: 25df634e8e13d4357a25572cb6e84b1a, type: 3}
   combineMeshes: {fileID: 484143592150663135}
 --- !u!114 &484143592150663135
 MonoBehaviour:
@@ -63,22 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdc9487406d49039f8592bba107aa14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &484143592150662944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484143592150663134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d603254c1c0849b78957432f633ef87b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blocksManager: {fileID: 0}
-  chanceOfEmptyBlock: 0.1
-  chanceOfSpecificBlock: 0.2
-  chanceOfNatureBlock: 0.02
 --- !u!65 &484143592150662945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -90,5 +71,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 22, y: 12, z: 22}
+  m_Size: {x: 30, y: 22, z: 30}
   m_Center: {x: 10, y: 2, z: 10}

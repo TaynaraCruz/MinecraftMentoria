@@ -5,22 +5,16 @@ using UnityEngine;
 
 public class ChunkGenerator : MonoBehaviour
 {
-    [SerializeField] private NatureGenerator natureGenerator;
-    [SerializeField] private Vector3 chunkSize;
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private CombineMeshes combineMeshes;
 
-    private float _spawnBlockChance;
-    
-    
-    public void CreateChunk(Map map)
+    public void CreateChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
     {
-        StartCoroutine(GenerateChunk(map));
+        StartCoroutine(GenerateChunk(map, chunkSize, blocks));
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter");
         if (other.gameObject.CompareTag("Player"))
         {
             combineMeshes.Detach();
@@ -29,22 +23,48 @@ public class ChunkGenerator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("OnTriggerExit");
         if (other.gameObject.CompareTag("Player"))
         {
             combineMeshes.Combine();
         }
     }
 
-    IEnumerator GenerateChunk(Map map)
+    IEnumerator GenerateChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
     {
         loadingScreen.SetActive(true);
         Time.timeScale = 0;
-        natureGenerator.NatureGeneration(chunkSize, map);
+        InstantiateBlocksInChunk(map, chunkSize, blocks);
         if (combineMeshes)
             combineMeshes.Combine();
         yield return new WaitForEndOfFrame(); 
         Time.timeScale = 1;
         loadingScreen.SetActive(false);
+    }
+
+    private void InstantiateBlocksInChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
+    {
+        for (int y = 0; y < chunkSize.y; y++)
+        {
+            for (int x = 0; x < chunkSize.x; x++)
+            {
+                for (int z = 0; z < chunkSize.z; z++)
+                {
+                    var blockType = map.GetBlock(x, y, z);
+                    var terrainHeight = map.GetTerrainHeight(new Vector3(x, y, z));
+                    if (blockType >= 0)
+                    {
+                        var obj = Instantiate(blocks[blockType], transform.TransformPoint(new Vector3(x, y, z)), Quaternion.identity, transform);
+                        obj.layer = ShouldRenderInsideChunk(chunkSize, terrainHeight, x, y, z) ? 0 : 6;
+                        // obj.layer = 0;
+                    }
+                }
+            }
+        }
+    }
+    
+    private bool ShouldRenderInsideChunk(Vector3 worldSize, int terrainHeight, int posX, int posY, int posZ)
+    {
+        return posX == (int) worldSize.x - 1 || posY == (int) worldSize.y - 1 || posZ == (int) worldSize.z - 1
+               || posX == 0 || posY == 0 || posZ == 0 || posY >= terrainHeight-1;
     }
 }

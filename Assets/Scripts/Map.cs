@@ -8,14 +8,16 @@ public class Map
 {
     private int _maxMapSize;
     private int[,,] _map;
+    private int[,,] _terrainHeight;
 
     public Map(int maxMapSize = 100)
     {
         _maxMapSize = maxMapSize;
         _map = new int[_maxMapSize, _maxMapSize, _maxMapSize];
+        _terrainHeight = new int[_maxMapSize, _maxMapSize, _maxMapSize];
     }
 
-    public void SetBlock(int posX, int posY, int posZ, int blockType)
+    public void SetBlock(int posX, int posY, int posZ, int blockType, int terrainHeight)
     {
         if (posX >= _maxMapSize || posY >= _maxMapSize || posZ >= _maxMapSize
             || posX < 0 || posY < 0 || posZ < 0)
@@ -26,6 +28,7 @@ public class Map
         try
         {
             _map[posX, posY, posZ] = blockType;
+            _terrainHeight[posX, posY, posZ] = terrainHeight;
         }
         catch (Exception e)
         {
@@ -45,22 +48,23 @@ public class Map
         return _map[posX, posY, posZ];
     }
     
-    public void AddBlockInMap(GameObject[] blocks, GameObject parent, int blockType, int posX, int posY, int posZ, int layer = 0)
+    public void AddBlockInMap(GameObject[] blocks, int blockType, int posX, int posY, int posZ, int terrainHeight)
     {
         if (blockType >= blocks.Length || blockType < 0)
         {
             Debug.LogError("Invalid Block");
             return;
         }
-        var obj = GameObject.Instantiate(blocks[blockType], parent.transform.TransformPoint(new Vector3(posX, posY, posZ)),
-            Quaternion.identity, parent.transform);
-        SetBlock(posX, posY, posZ, blockType);
-
-        obj.layer = layer;
+        SetBlock(posX, posY, posZ, blockType, terrainHeight);
     }
     
-    public void AddEmptyBlockInMap(int posX, int posY, int posZ)
+    public void AddEmptyBlockInMap(int posX, int posY, int posZ, int terrainHeight)
     {
-        SetBlock(posX, posY, posZ, -1);
+        SetBlock(posX, posY, posZ, -1, terrainHeight);
+    }
+
+    public int GetTerrainHeight(Vector3 pos)
+    {
+        return _terrainHeight[(int) pos.x, (int) pos.y, (int) pos.z];
     }
 }

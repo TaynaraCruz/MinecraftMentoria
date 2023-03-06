@@ -5,127 +5,48 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 public class NatureGenerator : MonoBehaviour
 {
-    [SerializeField] private BlocksManager blocksManager;
     [SerializeField] private float chanceOfEmptyBlock = 0.4f;
     [SerializeField] private float chanceOfSpecificBlock = 0.3f;
     [SerializeField] private float chanceOfNatureBlock = 0.2f;
-
-    private GameObject[] _blocks;
     
-    private void Awake()
+    public void NatureGeneration(Vector3 worldSize, Map map,  GameObject[] blocks)
     {
-        _blocks = blocksManager.GetBlocks();
+        MapProceduralGenerator(worldSize, map, blocks);
     }
 
-    public void NatureGeneration(Vector3 chunkSize, Map map)
+    private void MapProceduralGenerator(Vector3 worldSize, Map map, GameObject[] blocks)
     {
-        // MapLoopGenerator(chunkSize, map);
-        MapProceduralGenerator(chunkSize, map);
-    }
-
-    private void MapProceduralGenerator(Vector3 chunkSize, Map map)
-    {
-        for (int y = 0; y < chunkSize.y; y++)
+        for (int x = 0; x < (int)worldSize.x; x++)
         {
-            for (int x = 0; x < chunkSize.x; x++)
+            for (int z = 0; z <(int)worldSize.z; z++)
             {
-                for (int z = 0; z < chunkSize.z; z++)
+                for (int y = 0; y < (int)worldSize.y; y++)
                 {
-                    var terrainHeight = Mathf.FloorToInt(chunkSize.y * Noise.Get2DPerlin(new Vector2(x, z), (int) chunkSize.x, 800, 0.25f));
-                    var layer = shouldRenderInsideChunk(chunkSize, terrainHeight, x, y, z) ? 0 : 6;
+                    var terrainHeight = Mathf.FloorToInt(worldSize.y * Noise.Get2DPerlin(transform.TransformPoint(new Vector2(x, z)), 0.05f));
                     if (y == 0)
                     {
-                        map.AddBlockInMap(_blocks, gameObject, 3, x, y, z, layer);
+                        map.AddBlockInMap(blocks, 3, x, y, z, terrainHeight);
                     }
                     else if (y < terrainHeight)
                     {
-                        map.AddBlockInMap(_blocks, gameObject, 0, x, y, z, layer);
+                        map.AddBlockInMap(blocks, 0, x, y, z, terrainHeight);
                     }
                     else if (y == terrainHeight)
                     {
                         var spawnBlockChance = Random.Range(0.0f, 1.0f);
                         if (spawnBlockChance < chanceOfNatureBlock)
                         {
-                            map.AddBlockInMap(_blocks, gameObject, 5, x, y, z, layer);
+                            map.AddBlockInMap(blocks, 5, x, y, z, terrainHeight);
                         }
                         else
-                            map.AddEmptyBlockInMap(x, y, z);
+                            map.AddEmptyBlockInMap(x, y, z, terrainHeight);
                     }
                     else
                     {
-                        map.AddEmptyBlockInMap(x, y, z);
+                        map.AddEmptyBlockInMap(x, y, z, terrainHeight);
                     }
                 }
             }
         }
-    }
-
-    private void MapLoopGenerator(Vector3 chunkSize, Map map)
-    {
-        for (int i = 0; i < chunkSize.x; i++)
-        {
-            for (int j = 0; j < chunkSize.z; j++)
-            {
-                for (int k = 0; k < chunkSize.y; k++)
-                {
-                    float spawnBlockChance = 0f;
-
-                    if (k >= 0 && k <= 2)
-                    {
-                        spawnBlockChance = Random.Range(0.0f, 1.0f);
-                        if (spawnBlockChance < chanceOfSpecificBlock)
-                        {
-                            map.AddBlockInMap(_blocks, gameObject, 2, i, k, j);
-                        }
-                        else
-                        {
-                            map.AddBlockInMap(_blocks, gameObject, 3, i, k, j);
-                        }
-                    }
-                    else if (k == 3)
-                    {
-                        map.AddBlockInMap(_blocks, gameObject, 0, i, k, j);
-                    }
-                    else if (k == 4)
-                    {
-                        spawnBlockChance = Random.Range(0.0f, 1.0f);
-                        if (spawnBlockChance < chanceOfSpecificBlock)
-                        {
-                            map.AddBlockInMap(_blocks, gameObject, 4, i, k, j);
-                        }
-                        else
-                        {
-                            map.AddBlockInMap(_blocks, gameObject, 1, i, k, j);
-                        }
-                    }
-                    else
-                    {
-                        spawnBlockChance = Random.Range(0.0f, 1.0f);
-                        if (spawnBlockChance > chanceOfEmptyBlock)
-                        {
-                            var randomBlock = Random.Range(0, 2);
-
-                            map.AddBlockInMap(_blocks, gameObject, randomBlock, i, k, j);
-                        }
-                        else
-                        {
-                            spawnBlockChance = Random.Range(0.0f, 1.0f);
-                            if (spawnBlockChance < chanceOfNatureBlock)
-                            {
-                                map.AddBlockInMap(_blocks, gameObject, 5, i, k, j);
-                            }
-                            else
-                                map.AddEmptyBlockInMap(i, k, j);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private bool shouldRenderInsideChunk(Vector3 chunkSize, int terrainHeight, int posX, int posY, int posZ)
-    {
-        return posX == (int) chunkSize.x - 1 || posY == (int) chunkSize.y - 1 || posZ == (int) chunkSize.z - 1
-                || posX == 0 || posY == 0 || posZ == 0 || posY >= terrainHeight-1;
     }
 }

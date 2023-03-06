@@ -8,9 +8,11 @@ public class WorldMapGenerator : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Vector3 mapSize;
     [SerializeField] private int mapMaxSize;
-    [SerializeField] private int chunkSize;
+    [SerializeField] private Vector3 chunkSize;
     [SerializeField] private BlocksManager blocksManager;
     [SerializeField] private GameObject chunkPrefab;
+    [SerializeField] private NatureGenerator natureGenerator;
+
 
     private GameObject[] _blocks;
     private Map _map;
@@ -18,11 +20,11 @@ public class WorldMapGenerator : MonoBehaviour
     {
         _map = new Map(mapMaxSize);
         _blocks = blocksManager.GetBlocks();
-        if (SaveManager.HasSavedMap())
-        {
-            // StartCoroutine(LoadSavedMap());
-            StartCoroutine(CreateWorldMap());
-        }
+        // if (SaveManager.HasSavedMap())
+        // {
+        //     StartCoroutine(LoadSavedMap());
+        // }
+        StartCoroutine(CreateWorldMap());
     }
     IEnumerator LoadSavedMap()
     {
@@ -43,7 +45,6 @@ public class WorldMapGenerator : MonoBehaviour
                                 gameObject.transform);
                     }
                 }
-
                 yield return new WaitForEndOfFrame();
             }
         }
@@ -54,19 +55,20 @@ public class WorldMapGenerator : MonoBehaviour
 
     IEnumerator CreateWorldMap()
     {
-        for (int i = 0; i < mapSize.x; i += chunkSize)
+        natureGenerator.NatureGeneration(mapSize, _map, _blocks);
+        for (int x = 0; x < mapSize.x; x += (int)chunkSize.x)
         {
-            for (int j = 0; j < mapSize.z; j += chunkSize)
+            for (int z = 0; z < mapSize.z; z += (int)chunkSize.z)
             {
-                var chunkObj = Instantiate(chunkPrefab, new Vector3(i, 0, j), Quaternion.identity, gameObject.transform);
+                var chunkObj = Instantiate(chunkPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
                 var generationObj = chunkObj.GetComponent<ChunkGenerator>();
-                generationObj.CreateChunk(_map);
+                generationObj.CreateChunk(_map, chunkSize, _blocks);
             }
             yield return new WaitForEndOfFrame();
         }
         Time.timeScale = 1;
-        loadingScreen.SetActive(false);
         SaveManager.Save(_map);
+        loadingScreen.SetActive(false);
     }
     
 }
