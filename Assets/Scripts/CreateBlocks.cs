@@ -19,12 +19,17 @@ public class CreateBlocks : MonoBehaviour
 
     private void Start()
     {
-        _blocks = blocksManager.GetBlocks();
-        _blockMap = new Dictionary<string, int>();
-        for (int i = 0; i < _blocks.Length; i++) 
+        if (_blocks != null)
         {
-            _blockMap.Add(_blocks[i].tag, i);
-        }
+            _blocks = blocksManager.GetBlocks();
+            _blockMap = new Dictionary<string, int>();
+            for (int i = 0; i < _blocks.Length; i++) 
+            {
+                _blockMap.Add(_blocks[i].tag, i);
+            }
+
+        } 
+        
     }
 
     void Update()
