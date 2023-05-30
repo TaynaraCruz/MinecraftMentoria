@@ -8,9 +8,9 @@ public class ChunkGenerator : MonoBehaviour
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private CombineMeshes combineMeshes;
 
-    public void CreateChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
+    public void CreateChunk(Map map, Vector3 chunkSize, Vector2 chunkOffset, GameObject[] blocks)
     {
-        StartCoroutine(GenerateChunk(map, chunkSize, blocks));
+        StartCoroutine(GenerateChunk(map, chunkSize, chunkOffset, blocks));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,11 +29,11 @@ public class ChunkGenerator : MonoBehaviour
         }
     }
 
-    IEnumerator GenerateChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
+    IEnumerator GenerateChunk(Map map, Vector3 chunkSize, Vector2 chunkOffset, GameObject[] blocks)
     {
         loadingScreen.SetActive(true);
         Time.timeScale = 0;
-        InstantiateBlocksInChunk(map, chunkSize, blocks);
+        InstantiateBlocksInChunk(map, chunkSize, chunkOffset, blocks);
         if (combineMeshes)
             combineMeshes.Combine();
         yield return new WaitForEndOfFrame(); 
@@ -41,16 +41,19 @@ public class ChunkGenerator : MonoBehaviour
         loadingScreen.SetActive(false);
     }
 
-    private void InstantiateBlocksInChunk(Map map, Vector3 chunkSize, GameObject[] blocks)
+    private void InstantiateBlocksInChunk(Map map, Vector3 chunkSize, Vector2 chunkOffset, GameObject[] blocks)
     {
+        var offsetX = (int) chunkOffset.x;
+        var offsetZ = (int) chunkOffset.y;
+        
         for (int y = 0; y < chunkSize.y; y++)
         {
             for (int x = 0; x < chunkSize.x; x++)
             {
                 for (int z = 0; z < chunkSize.z; z++)
                 {
-                    var blockType = map.GetBlock(x, y, z);
-                    var terrainHeight = map.GetTerrainHeight(new Vector3(x, y, z));
+                    var blockType = map.GetBlock(x+offsetX, y, z+offsetZ);
+                    var terrainHeight = map.GetTerrainHeight(new Vector3(x+offsetX, y, z+offsetZ));
                     if (blockType >= 0)
                     {
                         var obj = Instantiate(blocks[blockType], transform.TransformPoint(new Vector3(x, y, z)), Quaternion.identity, transform);

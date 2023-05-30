@@ -62,7 +62,7 @@ public class WorldMapGenerator : MonoBehaviour
             {
                 var chunkObj = Instantiate(chunkPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
                 var generationObj = chunkObj.GetComponent<ChunkGenerator>();
-                generationObj.CreateChunk(_map, chunkSize, _blocks);
+                generationObj.CreateChunk(_map, chunkSize, new Vector2(x, z), _blocks);
             }
             yield return new WaitForEndOfFrame();
         }
